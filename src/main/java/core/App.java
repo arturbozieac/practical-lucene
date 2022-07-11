@@ -11,21 +11,19 @@ import org.apache.lucene.queryparser.classic.ParseException;
 public class App {
   public static void main(String[] args) throws IOException {
     Indexer indexer = new Indexer("./src/main/resources/index");
-    indexer.index(Arrays.asList(new File("./src/main/resources/index.html")));
+    indexer.index(Arrays.asList(new File("./src/main/resources/index.html"),
+                                new File("./src/main/resources/care3.html"),
+                                new File("./src/main/resources/indexTerms.html")));
     
     try {
-      List<Document> searchFiles = indexer.searchFiles("contents", "Search");
+      List<Document> searchFiles = indexer.searchFiles("contents", "flower");
       for(Document doc : searchFiles) {
         System.out.println("File name : " + doc.get("filename"));
         System.out.println("File path : " + doc.get("path"));
       }
-     } catch (IOException e) {
-      // TODO Auto-generated catch block
+     } catch (IOException | ParseException e) {
       e.printStackTrace();
-    } catch (ParseException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    } 
     indexer.clearIndex();
   }
 }

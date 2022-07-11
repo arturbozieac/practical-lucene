@@ -64,8 +64,10 @@ public class Indexer {
     Query query = new QueryParser(inField, new StandardAnalyzer()).parse(queryString);
     IndexReader indexReader = DirectoryReader.open(indexDirectory);
     IndexSearcher searcher = new IndexSearcher(indexReader);
-    TopDocs topDocs = searcher.search(query, 1);
-    System.out.println(topDocs.totalHits);
+    TopDocs topDocs = searcher.search(query, 10);
+    
+    System.out.println("Total hits " + topDocs.totalHits);
+    
     return Stream.of(topDocs.scoreDocs)
         .map(scoreDoc -> {
           Document doc = null;
